@@ -1,4 +1,7 @@
 from django.db import models
+from django.utils import (
+    timezone,
+)  # Time Utility library 안쓰는 이유 -> 장고가 시간관리하는 class가 있기 때문
 from core import models as core_models
 
 # Create your models here.
@@ -24,4 +27,17 @@ class Reservation(core_models.TimeStampedModel):
     room = models.ForeignKey("rooms.Room", on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.room} - {self.check_in}"
+        return f"{self.room}"
+
+    def in_progress(self):
+        now = timezone.now().date()
+        return now >= self.check_in and now <= self.check_out
+
+    in_progress.boolean = True
+
+    def is_finished(self):
+        now = timezone.now().date()
+        return now > self.check_out
+
+    is_finished.boolean = True
+

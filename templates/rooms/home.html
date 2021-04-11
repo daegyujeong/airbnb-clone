@@ -1,0 +1,49 @@
+
+{% extends "base.html" %}
+
+{% block pagename %}
+    Home
+{% endblock pagename %}
+    
+{% block content %} 
+    <!-- {% for room in rooms %} 
+    <h1>{{room.name}} / ${{room.price}}</h1>
+    {% endfor %} -->
+    <!-- {% for room in page.object_list  %}    
+    <h1>{{room.name}} / ${{room.price}}</h1>
+    {% endfor %}   -->
+    <!--Listview 사용 시  page.object_list -> object_list -> context_object_name를 통해 object이름 바꿀 수 있다 -->
+    {{now}}
+
+    {% for room in rooms  %}
+    <h1>{{room.name}} / ${{room.price}}</h1>
+    {% endfor %}      
+        <h5>
+        <!-- {% if page is not 1 %}
+            <a href="?page={{page|add:-1}}">Previous</a>
+        {% endif %} -->
+        {% if page.has_previous %}
+        <a href="?page={{page.previous_page_number}}">Previous</a>          
+        {% endif %}
+
+        Page {{page.number}} of {{page.paginator.num_pages}}    
+        <!-- Page {{page}} of {{page_count}}
+    
+        {% if not page == page_count  %}
+            <a href="?page={{page|add:1}}">Next</a>
+        {% endif %} -->
+        {% if page.has_next  %}
+        <a href="?page={{page.next_page_number}}">Next</a>
+        {% endif %}
+    
+    
+        </h5>       
+    {% endblock content %}
+<!-- <h1>Hello!!</h1>
+
+<h4>The time right now is: {{now}} </h4>
+
+<h6>
+{% if hungry  %}I'm hungry{% else %}i'm okay{% endif %}
+</h6>  -->
+<!-- Templates 안에 있는건 같은 폴더로 생각하면 됨 ../base할 필요 없음  -->
